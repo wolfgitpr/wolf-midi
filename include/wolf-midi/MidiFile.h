@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <iosfwd>
 #include <list>
 #include <vector>
 
@@ -120,7 +121,9 @@ namespace Midi
 
         void clear();
         bool load(const std::filesystem::path &filename);
+        bool load(std::istream &in);
         bool save(const std::filesystem::path &filename);
+        bool save(std::ostream &out);
 
         MidiFile *oneTrackPerVoice() const;
 
