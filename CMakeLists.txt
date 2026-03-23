@@ -2,7 +2,7 @@
 # Project
 # ----------------------------------
 cmake_minimum_required(VERSION 3.17)
-project(wolf-midi VERSION 1.0.0.0 LANGUAGES CXX)
+project(wolf-midi VERSION 1.0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -16,17 +16,17 @@ option(WOLF_MIDI_INSTALL "Install library" ON)
 # ----------------------------------
 # CMake Settings
 # ----------------------------------
-if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+if (NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-endif()
+endif ()
 
-if(NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+if (NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-endif()
+endif ()
 
-if(NOT DEFINED CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+if (NOT DEFINED CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-endif()
+endif ()
 
 if (MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /manifest:no")
@@ -49,12 +49,12 @@ endif ()
 include_directories(include)
 file(GLOB_RECURSE _src include/*.h src/*.h src/*.cpp src/*/*.h src/*/*.cpp)
 
-if(WOLF_MIDI_BUILD_STATIC)
+if (WOLF_MIDI_BUILD_STATIC)
     add_library(${PROJECT_NAME} STATIC)
     target_compile_definitions(${PROJECT_NAME} PUBLIC WOLF_MIDI_STATIC)
-else()
+else ()
     add_library(${PROJECT_NAME} SHARED)
-endif()
+endif ()
 target_compile_definitions(${PROJECT_NAME} PRIVATE WOLF_MIDI_LIBRARY)
 
 target_sources(${PROJECT_NAME} PRIVATE ${_src})

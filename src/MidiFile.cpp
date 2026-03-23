@@ -424,7 +424,7 @@ namespace Midi
                                                   const int denominator) {
         std::vector<char> buf(4, 0);
         buf[0] = static_cast<char>(numerator);
-        buf[1] = static_cast<char>(denominator);
+        buf[1] = static_cast<char>(static_cast<int>(std::log2(denominator)));
         buf[2] = 24;
         buf[3] = 8;
         return createMetaEvent(track, tick, MidiEvent::TimeSignature, buf);
