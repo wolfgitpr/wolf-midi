@@ -1014,7 +1014,7 @@ namespace Midi
 
                 case MidiEvent::ChannelPressure:
                     out.put(static_cast<char>(0xD0 | (e->voice() & 0x0F)));
-                    out.put(static_cast<char>(e->value() & 0x7F));
+                    out.put(static_cast<char>(e->amount() & 0x7F));
                     break;
 
                 case MidiEvent::PitchWheel:
