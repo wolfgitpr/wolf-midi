@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.17)
 project(wolf-midi VERSION 1.0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ----------------------------------
 # Build Options
@@ -68,6 +69,7 @@ endif ()
 # Add platform specific
 # ----------------------------------
 if (WIN32)
+    enable_language(RC)
     set(RC_DESCRIPTION "A lightweight MIDI file read-write library.")
     set(RC_COPYRIGHT "Copyright (C) 2023-2024 wolfgitpr")
     include("cmake/winrc.cmake")

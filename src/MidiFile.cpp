@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <wolf-midi/MidiFile.h>
 
+#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <fstream>
@@ -569,10 +570,6 @@ namespace Midi
     /*
      * Helpers
      */
-
-#include <cstdint>
-#include <cstring>
-#include <fstream>
 
     // Interpret two bytes as a signed 16-bit integer
     int16_t interpret_int16(const unsigned char *buffer) {

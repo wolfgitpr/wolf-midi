@@ -144,7 +144,7 @@ namespace Midi
         int createTrack();
         void removeTrack(int track);
         int32_t trackEndTick(int track);
-        inline std::list<int> tracks() { return fTracks; }
+        inline std::list<int> tracks() const { return fTracks; }
 
         MidiEvent *createNoteOnEvent(int track, int32_t tick, int voice, int note, int velocity);
         MidiEvent *createNoteOffEvent(int track, int32_t tick, int voice, int note, int velocity = 64);
@@ -167,7 +167,7 @@ namespace Midi
         MidiEvent *createMarkerEvent(int track, int32_t tick, const std::vector<char> &text);
         MidiEvent *createVoiceEvent(int track, int32_t tick, uint32_t data);
 
-        inline std::list<MidiEvent *> events() { return fEvents; }
+        inline std::list<MidiEvent *> events() const { return fEvents; }
         std::vector<MidiEvent *> events(int voice) const;
         std::vector<MidiEvent *> eventsForTrack(int track) const;
 
