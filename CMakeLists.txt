@@ -62,6 +62,7 @@ target_sources(${PROJECT_NAME} PRIVATE ${_src})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 if (WOLF_MIDI_BUILD_TESTS)
+    enable_testing()
     add_subdirectory(tests)
 endif ()
 
