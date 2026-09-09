@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }} / ${{ matrix.static == 'ON' && 'static' || 'shared' }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows (MSVC)
+          - os: windows-latest
+            compiler: msvc
+            static: OFF
+          - os: windows-latest
+            compiler: msvc
+            static: ON
+          # Linux (GCC)
+          - os: ubuntu-latest
+            compiler: gcc
+            static: OFF
+          - os: ubuntu-latest
+            compiler: gcc
+            static: ON
+          # Linux (Clang)
+          - os: ubuntu-latest
+            compiler: clang
+            static: OFF
+          # macOS (AppleClang)
+          - os: macos-latest
+            compiler: apple-clang
+            static: OFF
+          - os: macos-latest
+            compiler: apple-clang
+            static: ON
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Clang
+        if: matrix.compiler == 'clang' && runner.os == 'Linux'
+        run: |
+          echo "CC=clang" >> "$GITHUB_ENV"
+          echo "CXX=clang++" >> "$GITHUB_ENV"
+
+      - name: Configure
+        run: >
+          cmake -S . -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DWOLF_MIDI_BUILD_TESTS=ON
+          -DWOLF_MIDI_BUILD_STATIC=${{ matrix.static }}
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
